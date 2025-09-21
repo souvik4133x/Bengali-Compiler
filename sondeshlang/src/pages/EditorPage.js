@@ -1,36 +1,28 @@
 import React, { useState } from 'react';
 import CodeEditor from '../components/CodeEditor';
+import InputModal from '../components/InputModal';
 
 const EditorPage = () => {
-  const [bengaliCode, setBengaliCode] = useState(`shuru
+  const [bengaliCode, setBengaliCode] = useState(`
+# সংখ্যা ইনপুট নেওয়া
+number = sonkha(inputnao())
 
-# এটি একটি হ্যালো ওয়ার্ল্ড প্রোগ্রাম
-bol("Hello World!")
+# সংখ্যায় ২ যোগ করা
+number += 2
 
-# ভেরিয়েবল
-নাম = "রিয়াদ"
-বয়স = ২৫
-bol("আমার নাম", নাম, "এবং বয়স", বয়স)
-
-# কন্ডিশন
-jodi 5 < 3:
-    bol("হ্যাঁ")
-othoba 5 > 2:
-    bol("my god")
-noyto:
-    bol("না")
-
-# লুপ
-bol("১ থেকে ৫ পর্যন্ত সংখ্যা:")
-prottek i er jonno(১, ৬):
-    bol(i)`);
+# বার্তা প্রিন্ট করা
+bol("আপনি আরও", number, "বছর বেঁচে থাকবেন")
+`);
   
   const [output, setOutput] = useState('আউটপুট এখানে দেখানো হবে');
   const [isLoading, setIsLoading] = useState(false);
+  const [userInputs, setUserInputs] = useState([]);
+  const [showInputModal, setShowInputModal] = useState(false);
+  const [inputPrompt, setInputPrompt] = useState('');
 
-  const runCode = async () => {
+  const runCode = async (inputs = []) => {
     setIsLoading(true);
-    setOutput('কোড 실행 হচ্ছে...');
+    setOutput('কোড রান হচ্ছে...');
     
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/run`, {
@@ -38,7 +30,10 @@ prottek i er jonno(১, ৬):
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code: bengaliCode })
+        body: JSON.stringify({ 
+          code: bengaliCode,
+          inputs: inputs
+        })
       });
       
       if (!response.ok) {
@@ -47,23 +42,59 @@ prottek i er jonno(১, ৬):
       }
       
       const data = await response.json();
-      setOutput(data.output || 'কোন আউটপুট তৈরি হয়নি');
+      
+      if (data.requires_input) {
+        // Show input modal
+        setShowInputModal(true);
+        setInputPrompt(data.input_prompt || 'দয়া করে একটি মান ইনপুট করুন:');
+        setOutput(data.output);
+      } else {
+        setOutput(data.output || 'কোন আউটপুট তৈরি হয়নি');
+        setShowInputModal(false);
+      }
     } catch (error) {
       console.error('API ত্রুটি:', error);
       setOutput(`ত্রুটি: ${error.message}`);
+      setShowInputModal(false);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleInputSubmit = (inputValue) => {
+    const newInputs = [...userInputs, inputValue];
+    setUserInputs(newInputs);
+    setShowInputModal(false);
+    runCode(newInputs);
+  };
+
+  const handleCloseModal = () => {
+    setShowInputModal(false);
+    setIsLoading(false);
+  };
+
+  const handleRunCode = () => {
+    setUserInputs([]);
+    runCode([]);
+  };
+
   return (
-    <CodeEditor
-      bengaliCode={bengaliCode}
-      setBengaliCode={setBengaliCode}
-      output={output}
-      isLoading={isLoading}
-      runCode={runCode}
-    />
+    <>
+      <CodeEditor
+        bengaliCode={bengaliCode}
+        setBengaliCode={setBengaliCode}
+        output={output}
+        isLoading={isLoading}
+        runCode={handleRunCode}
+      />
+      
+      <InputModal
+        isOpen={showInputModal}
+        prompt={inputPrompt}
+        onSubmit={handleInputSubmit}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 };
 

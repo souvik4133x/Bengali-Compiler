@@ -19,7 +19,7 @@ const CodeEditor = ({ bengaliCode, setBengaliCode, output, isLoading, runCode })
                 <span className="editor-icon">📝</span>
                 বাংলা কোড
               </div>
-              <button 
+              <button
                 className="run-button"
                 onClick={runCode}
                 disabled={isLoading}
@@ -52,7 +52,7 @@ const CodeEditor = ({ bengaliCode, setBengaliCode, output, isLoading, runCode })
             </div>
             <div className="output-area">
               <pre className="output-content">
-                {isLoading ? 'কোড 실행 হচ্ছে...' : output || 'আউটপুট এখানে দেখানো হবে'}
+                {isLoading ? 'কোড রান হচ্ছে...' : output || 'আউটপুট এখানে দেখানো হবে'}
               </pre>
             </div>
           </div>
@@ -60,22 +60,25 @@ const CodeEditor = ({ bengaliCode, setBengaliCode, output, isLoading, runCode })
       </div>
 
       <div className="code-examples">
-        <h3 className="examples-title">দ্রুত শুরু করার জন্য উদাহরণ</h3>
+        <h3 className="examples-title">এডিটরে চালানোর জন্য উদাহরণ টিপুন</h3>
         <div className="examples-grid">
-          <div className="example-card" onClick={() => setBengaliCode(`shuru\nbol("Hello World!")`)}>
+          <div className="example-card" onClick={() => setBengaliCode(`bol("Hello World!")`)}>
             <div className="example-header">হ্যালো ওয়ার্ল্ড</div>
             <div className="example-code">bol("Hello World!")</div>
           </div>
-          
-          <div className="example-card" onClick={() => setBengaliCode(`shuru\nnaam = "আপনার নাম"\nbol(naam)`)}>
+
+          <div className="example-card" onClick={() => setBengaliCode(`naam = "আপনার নাম"\nbol(naam)`)}>
             <div className="example-header">ভেরিয়েবল</div>
             <div className="example-code">naam = "আপনার নাম"</div>
-             <div className="example-code">bol(naam)</div>
+            <div className="example-code">bol(naam)</div>
           </div>
-          
-          <div className="example-card" onClick={() => setBengaliCode(`shuru\njodi ৫ > ৩:\n    bol("সত্য")\nnahole:\n    bol("মিথ্যা")`)}>
+
+          <div className="example-card" onClick={() => setBengaliCode(`jodi ৫ > ৩:\n    bol("সত্য")\nnahole:\n    bol("মিথ্যা")`)}>
             <div className="example-header">কন্ডিশন</div>
-            <div className="example-code">jodi condition:\n    bol("সত্য")</div>
+            <div className="example-code">{`jodi ৫ > ৩:`}</div>
+            <div className="example-code">    bol("সত্য")</div>
+            <div className="example-code">nahole:</div>
+            <div className="example-code">    bol("মিথ্যা")</div>
           </div>
         </div>
       </div>

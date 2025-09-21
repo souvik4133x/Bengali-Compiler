@@ -19,8 +19,27 @@ app.add_middleware(
 
 class CodeRequest(BaseModel):
     code: str
+    inputs: list = []  # Add inputs field
 
-def run_bengali_code(code):
+class InputRequest(BaseModel):
+    input_value: str
+
+def run_bengali_code(code, inputs=None):
+    if inputs is None:
+        inputs = []
+    
+    input_index = [0]  # Use list to make it mutable in nested functions
+    
+    # Custom input function that uses provided inputs
+    def custom_input(prompt=""):
+        if input_index[0] < len(inputs):
+            value = inputs[input_index[0]]
+            input_index[0] += 1
+            return value
+        else:
+            # Raise special exception to request input
+            raise InputRequiredException(prompt)
+    
     replacements = {
         "bol": "print",
         "jodi": "if",
@@ -44,6 +63,8 @@ def run_bengali_code(code):
         "mithya": "False",
         "ebong": "and",
         "othoba": "or",
+        "inputnao": "custom_input",
+        "sonkha":"int",  # Map nao to our custom input function
         "shuru": "# Entry point"
     }
 
@@ -53,7 +74,6 @@ def run_bengali_code(code):
         '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'
     }
     
-    # First convert numerals
     for bn, en in numeral_map.items():
         code = code.replace(bn, en)
 
@@ -62,51 +82,77 @@ def run_bengali_code(code):
     processed_lines = []
     
     for line in lines:
-        # Preserve original indentation
         indentation = len(line) - len(line.lstrip())
-        
-        # Replace keywords in this line
         processed_line = line
         for beng, eng in replacements.items():
-            # Use word boundary regex but preserve indentation
             processed_line = re.sub(rf'(?<!\w){beng}(?!\w)', eng, processed_line)
-        
         processed_lines.append(processed_line)
     
-    # Join the processed lines
     code = '\n'.join(processed_lines)
     
     return code
+
+class InputRequiredException(Exception):
+    def __init__(self, prompt=""):
+        self.prompt = prompt
+        super().__init__("Input required")
 
 @app.post("/run")
 async def execute_code(request: CodeRequest):
     try:
         # Translate Bengali code to Python
-        python_code = run_bengali_code(request.code)
+        python_code = run_bengali_code(request.code, request.inputs)
+        
+        # Add custom input function to globals
+        input_index = [0]
+        def custom_input(prompt=""):
+            if input_index[0] < len(request.inputs):
+                value = request.inputs[input_index[0]]
+                input_index[0] += 1
+                return value
+            else:
+                raise InputRequiredException(prompt)
         
         # Capture the output
         old_stdout = sys.stdout
         redirected_output = sys.stdout = StringIO()
         
         try:
-            exec(python_code)
+            # Execute with custom input function
+            exec_globals = {
+                'custom_input': custom_input,
+                'InputRequiredException': InputRequiredException
+            }
+            exec(python_code, exec_globals)
             output = redirected_output.getvalue()
+            
+            return {
+                "output": output,
+                "python_code": python_code,
+                "requires_input": False
+            }
+            
+        except InputRequiredException as e:
+            output = redirected_output.getvalue()
+            return {
+                "output": output,
+                "python_code": python_code,
+                "requires_input": True,
+                "input_prompt": str(e.prompt)
+            }
         except Exception as e:
-            output = f"Error: {str(e)}"
+            output = redirected_output.getvalue() + f"\nError: {str(e)}"
+            return {
+                "output": output,
+                "python_code": python_code,
+                "requires_input": False
+            }
         finally:
             sys.stdout = old_stdout
-        
-        return {
-            "output": output,
-            "python_code": python_code
-        }
+            
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/")
 async def root():
     return {"message": "Bengali Script API is running"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)

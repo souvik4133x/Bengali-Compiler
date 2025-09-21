@@ -167,10 +167,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
+  
 }
 
 .example-card {
-  background: rgba(255, 255, 255, 0.95);
+  background-color:#ebd3d0 ;
   padding: 1.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -194,14 +195,12 @@
 }
 
 .example-code {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 8px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: 13px;
-  color: #5f6c7b;
-  line-height: 1.4;
-  white-space: pre-wrap;
+  font-family: 'Fira Code', monospace; /* বা যেকোনো কোড ফন্ট */
+  font-size: 0.95rem;
+  color: #2d3748;
+  line-height: 1.2; /* আগে বেশি থাকলে কমিয়ে দিলাম */
+  margin: 0.2rem 0; /* উপরে-নিচে মার্জিন কমানো */
+  white-space: pre-wrap; /* line break ঠিক রাখার জন্য */
 }
 
 @media (max-width: 968px) {
