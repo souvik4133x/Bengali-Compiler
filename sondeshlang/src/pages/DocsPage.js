@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import '../styles/DocsPage.css';
 
 const DocsPage = () => {
-  const [activeSection, setActiveSection] = useState('introduction');
+  const [activeSection, setActiveSection] = useState('input');
 const documentationSections = [
-  { id: 'introduction', title: 'ভূমিকা', content: 'সন্দেশLang সম্পর্কে প্রাথমিক ধারণা' },
+  { id: 'input', title: 'ইনপুট নেওয়া', content: 'ব্যবহারকারীর কাছ থেকে ইনপুট নেওয়ার জন্য inputnao() ফাংশন ব্যবহার করা হয়।' },
+  { id: 'output', title: 'আউটপুট', content: 'প্রোগ্রামের ফলাফল প্রদর্শনের জন্য bol() ফাংশন ব্যবহার করা হয়।' },
+  { id: 'niyomaboli', title: 'নিয়মাবলী', content: 'সন্দেশLang-এ ইন্ডেন্টেশন গুরুত্বপূর্ণ। শর্ত, লুপ এবং ব্লকগুলো সঠিকভাবে ইন্ডেন্ট করতে হবে।' },
   { id: 'variables', title: 'ভেরিয়েবল', content: 'ভেরিয়েবল ডিক্লেয়ার এবং ডাটা টাইপ' },
   { id: 'conditions', title: 'কন্ডিশনাল স্টেটমেন্ট', content: 'শর্তসাপেক্ষ বিবৃতি' },
   { id: 'loops', title: 'লুপ', content: 'while এবং for লুপ' },
@@ -17,20 +19,57 @@ const documentationSections = [
 
 const renderContent = () => {
   switch(activeSection) {
-    case 'introduction':
-      return (
-        <div>
-          <h2>সন্দেশLang ভূমিকা</h2>
-          <p>সন্দেশLang হল একটি বাংলা প্রোগ্রামিং ভাষা যা বাংলাভাষী শিক্ষার্থীদের জন্য ডিজাইন করা হয়েছে।</p>
-          
-          <h3>বেসিক স্ট্রাকচার</h3>
-          <div className="code-block">
-            <pre>{`# বেসিক আউটপুট
-bol("Hello World!")
-bol("Welcome to SandeshLang")`}</pre>
-          </div>
-        </div>
-      );
+    
+case 'input':
+  return (
+    <div>
+    <h2>ইনপুট নেওয়া</h2>
+    <p>সন্দেশLang-এ ব্যবহারকারীর কাছ থেকে ইনপুট নেওয়া যায় <code>inputnao()</code> ফাংশনের মাধ্যমে এবং <code>sonkha()</code> ব্যবহার করে পূর্ণসংখ্যা (integer) কে স্ট্রিং-এ রূপান্তর করা যায়।</p>
+
+    <div className="code-block">
+      <pre>{`# ব্যবহারকারীর কাছ থেকে নাম নেওয়া
+nam = inputnao("তোমার নাম লিখো: ")
+bol("হ্যালো", nam)
+
+# পূর্ণসংখ্যা স্ট্রিং-এ রূপান্তর করা
+boyos = inputnao()
+boyos_integar = sonkha(boyos)
+bol("তোমার বয়স:", boyos_integar)`}</pre>
+    </div>
+  </div>
+  );
+
+case 'output':
+  return (
+    <div>
+      <h2>আউটপুট</h2>
+      <p>নিচে উদাহরণ আউটপুট দেখানো হলো:</p>
+
+      <div className="code-block">
+        <pre>{`nam= "souvik"
+bol(nam)`}</pre>
+      </div>
+    </div>
+  );
+
+  case 'niyomaboli':
+  return (
+    <div>
+      <h2>ইন্ডেন্টেশন</h2>
+      <p>সন্দেশLang-এ পাইথন-এর মতো ইন্ডেন্টেশন গুরুত্বপূর্ণ। প্রতিটি ব্লক সঠিকভাবে ইন্ডেন্ট করা আবশ্যক।</p>
+
+      <h3>উদাহরণ: শর্ত ও লুপ</h3>
+      <div className="code-block">
+        <pre>{`jodi ৫ > ৩:
+    bol("৫ বড় ৩-এর চেয়ে")
+nahole:
+    bol("৫ ছোট বা সমান ৩-এর")`}</pre>
+      </div>
+
+      
+    </div>
+  );
+
 
     case 'variables':
       return (

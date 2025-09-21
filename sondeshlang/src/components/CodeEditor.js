@@ -6,8 +6,8 @@ const CodeEditor = ({ bengaliCode, setBengaliCode, output, isLoading, runCode })
     <div className="code-editor-page">
       <div className="editor-header-section">
         <div className="header-content">
-          <h1 className="editor-main-title">বাংলা কোড এডিটর</h1>
-          <p className="editor-subtitle">বাংলা ভাষায় কোড লিখুন এবং রিয়েল-টাইমে আউটপুট দেখুন</p>
+          <h1 className="editor-main-title">সন্দেশLang কোড এডিটর</h1>
+          <p className="editor-subtitle">সন্দেশLang-এ কোড লিখুন এবং রিয়েল-টাইমে আউটপুট দেখুন</p>
         </div>
       </div>
 
@@ -17,7 +17,7 @@ const CodeEditor = ({ bengaliCode, setBengaliCode, output, isLoading, runCode })
             <div className="editor-header">
               <div className="editor-title">
                 <span className="editor-icon">📝</span>
-                বাংলা কোড
+                কোড
               </div>
               <button
                 className="run-button"

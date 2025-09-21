@@ -5,6 +5,7 @@ import Home from './components/Home';
 import EditorPage from './pages/EditorPage';
 import DocsPage from './pages/DocsPage'; // Create this component later
 import './styles/Global.css';
+import FooterNav from './components/FooterNav';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/editor" element={<EditorPage />} />
           <Route path="/docs" element={<DocsPage />} />
         </Routes>
+        <FooterNav/>
       </div>
     </Router>
   );

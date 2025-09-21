@@ -1,7 +1,22 @@
+/* ---------------- Home Container ---------------- */
 .home-container {
   padding-top: 70px;
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(221, 152, 140, 0.92) 0%,   /* hero top */
+    rgba(224, 166, 154, 0.9) 10%,
+    rgba(228, 180, 168, 0.9) 20%,
+    rgba(237, 206, 199, 0.92) 35%,  /* hero bottom / features top */
+    rgba(245, 230, 225, 0.95) 55%,  /* features middle */
+    rgba(250, 245, 243, 0.97) 75%,  /* features bottom / CTA top */
+    rgba(255, 255, 255, 1) 100%      /* CTA bottom */
+  );
+  color: #2d3748;
+  backdrop-filter: blur(10px);
 }
 
+/* ---------------- Hero Section ---------------- */
 .hero-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -13,13 +28,14 @@
   min-height: 100vh;
 }
 
+/* Hero Title */
 .hero-title {
   font-size: 3.5rem;
   font-weight: bold;
-  color: #2d3748;
   margin-bottom: 1.5rem;
   line-height: 1.2;
   font-family: 'Hind Siliguri', sans-serif;
+  color: #2d3748;
 }
 
 .hero-title span {
@@ -28,6 +44,7 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Hero Description */
 .hero-description {
   font-size: 1.3rem;
   color: #5f6c7b;
@@ -36,6 +53,7 @@
   font-family: 'Hind Siliguri', sans-serif;
 }
 
+/* Buttons */
 .hero-buttons {
   display: flex;
   gap: 1.5rem;
@@ -70,19 +88,21 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Hero Visual */
 .hero-visual {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Code Demo */
 .code-demo {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 16px;
   overflow: hidden;
   width: 100%;
   max-width: 450px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
@@ -142,9 +162,15 @@
   color: #48bb78;
 }
 
+/* ---------------- Features Section ---------------- */
 .features-section {
   padding: 8rem 2rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(
+    to bottom,
+    rgba(237, 206, 199, 0.92) 0%,   /* hero bottom matches */
+    rgba(245, 230, 225, 0.95) 50%,  /* smooth middle */
+    rgba(250, 245, 243, 0.97) 100%  /* features bottom */
+  );
   backdrop-filter: blur(10px);
 }
 
@@ -203,57 +229,24 @@
   font-family: 'Hind Siliguri', sans-serif;
 }
 
-.stats-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, rgba(254, 197, 187, 0.9), rgba(252, 213, 206, 0.9));
-  color: #2d3748;
-  backdrop-filter: blur(10px);
-}
-
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.stat {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2.5rem 2rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(10px);
-}
-
-.stat-number {
-  font-size: 3.5rem;
-  font-weight: bold;
-  margin-bottom: 0.8rem;
-  background: linear-gradient(135deg, #ff6b6b, #fdbb2d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: 'Hind Siliguri', sans-serif;
-}
-
-.stat-label {
-  font-size: 1.2rem;
-  color: #5f6c7b;
-  font-weight: 500;
-  font-family: 'Hind Siliguri', sans-serif;
-}
-
+/* ---------------- CTA Section ---------------- */
 .cta-section {
   padding: 8rem 2rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 245, 243, 0.97) 0%,   /* features bottom matches */
+    rgba(245, 230, 225, 0.95) 30%,
+    rgba(237, 206, 199, 0.92) 60%,
+    rgba(224, 186, 178, 0.9) 80%,
+    rgba(221, 152, 140, 0.92) 100%
+  );
+  color: #2d3748;
   backdrop-filter: blur(10px);
 }
 
 .cta-section h2 {
   font-size: 3.2rem;
-  color: #2d3748;
   margin-bottom: 1.5rem;
   font-family: 'Hind Siliguri', sans-serif;
   font-weight: 700;
@@ -283,6 +276,7 @@
   box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
 }
 
+/* ---------------- Responsive ---------------- */
 @media (max-width: 768px) {
   .hero-section {
     grid-template-columns: 1fr;
@@ -290,27 +284,23 @@
     padding: 4rem 1rem;
     gap: 3rem;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-buttons {
     justify-content: center;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
-  .stats-container {
-    grid-template-columns: 1fr;
-  }
-  
+
   .section-title {
     font-size: 2.2rem;
   }
-  
+
   .cta-section h2 {
     font-size: 2.5rem;
   }
