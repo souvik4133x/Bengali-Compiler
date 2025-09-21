@@ -19,7 +19,7 @@ const Home = () => {
             <Link to="/editor">
               <button className="cta-button primary">এখনই শুরু করুন</button>
             </Link>
-            <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.youtube.com/shorts/yRD5DXfMSvQ?feature=share" target="_blank" rel="noopener noreferrer">
               <button className="cta-button secondary">ডেমো দেখুন</button>
             </a>
           </div>
@@ -70,7 +70,10 @@ const Home = () => {
       <section className="cta-section">
         <h2>আজই শুরু করুন আপনার প্রোগ্রামিং Journey</h2>
         <p>সন্দেশLang-এ প্রোগ্রামিং শিখুন এবং কোডিং Skills Develop করুন</p>
-        <button className="cta-button large">নিবন্ধন করুন</button>
+        
+        <Link to="/docs">
+              <button className="cta-button large">ডকুমেন্টেশন পড়ুন</button>
+        </Link>
       </section>
     </div>
   );
