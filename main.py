@@ -10,7 +10,7 @@ app = FastAPI(title="Bengali Script API")
 # Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["https://bengali-compiler-mgyr6ui6g-souvik-sahas-projects.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
