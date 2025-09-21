@@ -33,7 +33,7 @@ prottek i er jonno(১, ৬):
     setOutput('কোড 실행 হচ্ছে...');
     
     try {
-      const response = await fetch('http://localhost:8000/run', {
+      const response = await fetch('https://bengali-compiler.onrender.com/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
